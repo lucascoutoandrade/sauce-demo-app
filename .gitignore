@@ -1,0 +1,13 @@
+node_modules/
+.npm-cache/
+/playwright.config.js
+/src/**/*.js
+/tests/**/*.js
+playwright-report/
+test-results/
+blob-report/
+.env
+.env.*
+!.env.example
+*.log
+coverage/

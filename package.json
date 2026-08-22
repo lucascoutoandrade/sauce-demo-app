@@ -1,0 +1,20 @@
+{
+  "name": "sauce-demo-playwright-framework",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Playwright and TypeScript test automation framework for SauceDemo.",
+  "scripts": {
+    "test": "playwright test --project=regression --project=known-defects",
+    "test:smoke": "playwright test --project=smoke",
+    "test:regression": "playwright test --project=regression",
+    "test:known-defects": "playwright test --project=known-defects",
+    "test:headed": "playwright test --headed --project=regression --project=known-defects",
+    "report": "playwright show-report",
+    "codegen": "playwright codegen https://www.saucedemo.com"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.54.0",
+    "@types/node": "^24.0.0",
+    "typescript": "^5.8.0"
+  }
+}

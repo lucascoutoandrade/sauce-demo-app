@@ -18,9 +18,9 @@ npx playwright install chromium
 
 ```bash
 npm run test:smoke          # Smoke only
-npm run test:regression     # Regression excluding known defects (production gate)
-npm run test:known-defects  # Known defects only (failures remain visible)
-npm test                    # Full suite: regression + known defects
+npm run test:regression     # Quality gate: expected product behavior (blocking in CI)
+npm run test:known-defects  # Monitoring: known defects remain visible (non-blocking in CI)
+npm test                    # Full local run: regression + known defects (known defects may fail)
 npm run test:headed
 npm run report
 ```
@@ -32,6 +32,29 @@ Playwright project names in the report match the suite:
 - `known-defects`
 
 The HTML report is generated in `playwright-report/`; screenshots and traces are retained for failed tests in `test-results/`.
+
+## Development workflow
+
+Work on a feature branch. Do not push product changes straight to `master`.
+
+```text
+feature branch
+    → commit
+    → push
+    → Pull Request → master
+    → GitHub Actions
+    → Regression (blocking)
+    → merge only if Regression passes
+```
+
+GitHub Actions (`.github/workflows/playwright.yml`) runs on pull requests and pushes to `master`:
+
+- **Regression** — `npx tsc --noEmit` and `npm run test:regression`. A failure fails the workflow and must block merge.
+- **Known Defects** — `npm run test:known-defects`. Failures stay visible in the Playwright report and do not block the PR.
+
+`npm test` is for local full-suite inspection. It can be red because known-defect assertions are allowed to fail.
+
+Branch protection for `master` (require PR + required check **Regression**) is configured in the GitHub repository settings, not in this repo.
 
 ## Architecture
 

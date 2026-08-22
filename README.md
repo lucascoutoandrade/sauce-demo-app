@@ -36,7 +36,7 @@ The HTML report is generated in `playwright-report/`; screenshots and traces are
 ## Architecture
 
 - `src/pages` — page interactions and reusable, page-specific actions.
-- `src/locators` — semantic selectors only, with one file per page and no business logic.
+- `src/locators` — semantic selectors only, with one file per page plus shared header locators, and no business logic.
 - `src/fixtures` — shared Playwright fixtures and authentication helpers.
 - `src/test-data` — users, products, expected values, and data-driven inputs.
 - `src/utils` — reusable helpers, assertions, and reporting utilities.
@@ -59,4 +59,4 @@ Suite selection is configured in `playwright.config.ts` projects and invoked thr
 
 ## Locator policy
 
-Use locators in this order: `getByRole`, `getByLabel`, `getByPlaceholder`, stable `getByText`, `getByTestId`, stable CSS attributes, then XPath only when unavoidable. Avoid positional selectors.
+Use locators in this order: `getByRole`, `getByLabel`, `getByPlaceholder`, stable `getByText`, `getByTestId`, stable CSS attributes, then XPath only when unavoidable. Avoid positional selectors. Playwright `testIdAttribute` is `data-test`, matching SauceDemo’s real test IDs.

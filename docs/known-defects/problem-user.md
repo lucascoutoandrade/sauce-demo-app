@@ -7,7 +7,7 @@ These records describe **application defects**, not accepted product behavior. E
 - Affected user: `problem_user`
 - Affected feature: Add to cart (inventory listing vs product detail opened from the listing)
 - Classification: Known defect / regression
-- Automation coverage: `tests/known-defects/problem-user-add-to-cart.spec.ts`
+- Automation coverage: `tests/known-defects/problem-user-add-to-cart.spec.ts` (TC-011A listing, TC-011B detail)
 
 Reproducible behavior:
 
@@ -30,9 +30,13 @@ Actual behavior (approved matrix):
 
 Automation notes:
 
-- Each surface is evaluated in its own login session so listing cart state cannot leak into the detail check.
-- Listing success is the listing Remove control for that product slug becoming visible.
-- Detail success is the detail Remove control (`data-test="remove"`) becoming visible after Add to cart.
+- TC-011 is executed as two independent data-driven tests so one surface cannot skip the other: **TC-011A** listing, **TC-011B** detail.
+- Automation asserts expected product behavior: Add to cart works on both listing and detail for every product.
+- Failures remain visible when the application does not switch Add to cart to Remove. Defect flags are not used to invert the assertion.
+- `test.fail()` is not used for this TC.
+- Each surface uses its own login session. Listing and detail do not share cart state.
+- Listing success is the listing Remove control for that product becoming visible.
+- Detail success is the detail Remove control becoming visible after Add to cart.
 
 ## DEF-PROBLEM-USER-LISTING-IMAGE (TC-012)
 
@@ -46,6 +50,12 @@ Reproducible behavior: Log in as `problem_user` and inspect each listing image `
 Expected behavior: Listing image `src` matches the standard_user product asset (stable fragment such as `sauce-backpack`, `bike-light`).
 
 Actual behavior: Listing images are incorrect for all six products (`correctListingImage = false` in the approved matrix). Live DOM shows `sl-404` assets.
+
+Automation notes:
+
+- Automation asserts the correct listing image `src` (standard_user asset fragment) with a web-first locator assertion.
+- The test fails when the application presents an incorrect image. It does not pass because the image is wrong.
+- `test.fail()` is not used. Boolean inversion of `correctListingImage` is not used.
 
 ## DEF-PROBLEM-USER-DETAIL (TC-013)
 

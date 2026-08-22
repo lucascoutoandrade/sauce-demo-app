@@ -8,57 +8,44 @@ export const inventoryLocators = {
   },
 
   inventoryList(page: Page): Locator {
-    return page.locator('[data-test="inventory-list"]');
+    return page.getByTestId('inventory-list');
   },
 
   inventoryItems(page: Page): Locator {
-    return page.locator('[data-test="inventory-item"]');
+    return page.getByTestId('inventory-item');
   },
 
   productNames(page: Page): Locator {
-    return page.locator('[data-test="inventory-item-name"]');
+    return page.getByTestId('inventory-item-name');
   },
 
   productPrices(page: Page): Locator {
-    return page.locator('[data-test="inventory-item-price"]');
-  },
-
-  productImages(page: Page): Locator {
-    // data-test values are product-specific; class scopes the listing image set.
-    return page.locator('.inventory_item_img img');
+    return page.getByTestId('inventory-item-price');
   },
 
   productItem(page: Page, product: Product): Locator {
-    return page.locator('[data-test="inventory-item"]').filter({
+    return page.getByTestId('inventory-item').filter({
       has: page.getByText(product.name, { exact: true })
     });
   },
 
   productImage(page: Page, product: Product): Locator {
-    return page.locator(`[data-test="inventory-item-${product.slug}-img"]`);
+    return page.getByTestId(`inventory-item-${product.slug}-img`);
   },
 
   productTitleLink(page: Page, product: Product): Locator {
-    return page.locator(`[data-test="item-${product.id}-title-link"]`);
+    return page.getByTestId(`item-${product.id}-title-link`);
   },
 
   addToCartButton(page: Page, product: Product): Locator {
-    return page.locator(`[data-test="add-to-cart-${product.slug}"]`);
+    return page.getByTestId(`add-to-cart-${product.slug}`);
   },
 
   removeButton(page: Page, product: Product): Locator {
-    return page.locator(`[data-test="remove-${product.slug}"]`);
+    return page.getByTestId(`remove-${product.slug}`);
   },
 
   sortDropdown(page: Page): Locator {
     return page.getByRole('combobox');
-  },
-
-  shoppingCartLink(page: Page): Locator {
-    return page.locator('[data-test="shopping-cart-link"]');
-  },
-
-  shoppingCartBadge(page: Page): Locator {
-    return page.locator('[data-test="shopping-cart-badge"]');
   }
 };

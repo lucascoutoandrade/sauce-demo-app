@@ -34,20 +34,21 @@ export const checkoutLocators = {
   },
 
   errorMessage(page: Page): Locator {
-    return page.locator('[data-test="error"]');
+    // Shared error banner; the specific message is asserted in the test.
+    return page.getByTestId('error');
   },
 
   overviewItemName(page: Page, productName: string): Locator {
-    return page.locator('[data-test="inventory-item-name"]').filter({
+    return page.getByTestId('inventory-item-name').filter({
       hasText: productName
     });
   },
 
   completeHeader(page: Page): Locator {
-    return page.locator('[data-test="complete-header"]');
+    return page.getByRole('heading', { name: 'Thank you for your order!', exact: true });
   },
 
   completeText(page: Page): Locator {
-    return page.locator('[data-test="complete-text"]');
+    return page.getByTestId('complete-text');
   }
 };

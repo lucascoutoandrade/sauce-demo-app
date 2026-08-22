@@ -1,6 +1,7 @@
 import type { Locator, Page } from '@playwright/test';
 
 import { cartLocators } from '../locators/cart.locators';
+import { headerLocators } from '../locators/header.locators';
 import type { Product } from '../test-data/products';
 
 export class CartPage {
@@ -13,7 +14,7 @@ export class CartPage {
     this.pageTitle = cartLocators.pageTitle(page);
     this.cartItems = cartLocators.cartItems(page);
     this.checkoutButton = cartLocators.checkoutButton(page);
-    this.shoppingCartBadge = cartLocators.shoppingCartBadge(page);
+    this.shoppingCartBadge = headerLocators.shoppingCartBadge(page);
   }
 
   public cartItem(product: Product): Locator {

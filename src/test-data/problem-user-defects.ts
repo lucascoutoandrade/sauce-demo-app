@@ -11,6 +11,9 @@ import {
 /**
  * Confirmed problem_user defect matrix from manual QA validation.
  * These values describe defective application behavior, not accepted product behavior.
+ * TC-011 and TC-012 assert the correct expected product behavior and do not invert
+ * using these flags. TC-013 uses correctDetail / detailTitleIncorrect only to
+ * apply test.fail() for matrix-confirmed incorrect-detail rows (Fleece, Onesie).
  */
 export interface ProblemUserProductDefect {
   product: Product;

@@ -14,10 +14,14 @@ export const loginLocators = {
   },
 
   lockedOutErrorMessage(page: Page): Locator {
-    return page.getByText('Epic sadface: Sorry, this user has been locked out.', { exact: true });
+    return page.getByRole('heading', {
+      name: 'Epic sadface: Sorry, this user has been locked out.',
+      exact: true
+    });
   },
 
   invalidCredentialsErrorMessage(page: Page): Locator {
-    return page.locator('[data-test="error"]');
+    // Shared error banner; message text is asserted in the test.
+    return page.getByTestId('error');
   }
 };

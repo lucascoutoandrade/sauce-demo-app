@@ -8,28 +8,24 @@ export const cartLocators = {
   },
 
   cartItems(page: Page): Locator {
-    return page.locator('[data-test="inventory-item"]');
+    return page.getByTestId('inventory-item');
   },
 
   cartItem(page: Page, product: Product): Locator {
-    return page.locator('[data-test="inventory-item"]').filter({
+    return page.getByTestId('inventory-item').filter({
       has: page.getByText(product.name, { exact: true })
     });
   },
 
   cartItemName(page: Page, product: Product): Locator {
-    return cartLocators.cartItem(page, product).locator('[data-test="inventory-item-name"]');
+    return cartLocators.cartItem(page, product).getByTestId('inventory-item-name');
   },
 
   removeButton(page: Page, product: Product): Locator {
-    return page.locator(`[data-test="remove-${product.slug}"]`);
+    return page.getByTestId(`remove-${product.slug}`);
   },
 
   checkoutButton(page: Page): Locator {
     return page.getByRole('button', { name: 'Checkout' });
-  },
-
-  shoppingCartBadge(page: Page): Locator {
-    return page.locator('[data-test="shopping-cart-badge"]');
   }
 };

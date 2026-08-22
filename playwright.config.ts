@@ -23,6 +23,7 @@ export default defineConfig({
   reporter: [['list'], ['html', { open: 'never' }]],
   use: {
     baseURL: 'https://www.saucedemo.com',
+    testIdAttribute: 'data-test',
     screenshot: 'only-on-failure',
     trace: 'retain-on-failure',
     video: 'off'

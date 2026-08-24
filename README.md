@@ -17,7 +17,7 @@ npx playwright install chromium
 ## Commands
 
 ```bash
-npm run test:smoke          # Smoke only
+npm run test:smoke          # Fast critical-path check (blocking in CI)
 npm run test:regression     # Quality gate: expected product behavior (blocking in CI)
 npm run test:known-defects  # Monitoring: known defects remain visible (non-blocking in CI)
 npm test                    # Full local run: regression + known defects (known defects may fail)
@@ -43,18 +43,19 @@ feature branch
     → push
     → Pull Request → master
     → GitHub Actions
-    → Regression (blocking)
-    → merge only if Regression passes
+    → Smoke (blocking, fast) + Regression (blocking)
+    → merge only if blocking jobs pass
 ```
 
 GitHub Actions (`.github/workflows/playwright.yml`) runs on pull requests and pushes to `master`:
 
-- **Regression** — `npx tsc --noEmit` and `npm run test:regression`. A failure fails the workflow and must block merge.
-- **Known Defects** — `npm run test:known-defects`. Failures stay visible in the Playwright report and do not block the PR.
+- **Smoke** — `npx tsc --noEmit` and `npm run test:smoke`. Fast critical-path check. A failure fails the workflow.
+- **Regression** — `npx tsc --noEmit` and `npm run test:regression`. Main quality gate. A failure fails the workflow. The required status check on `master` remains **Regression**.
+- **Known Defects** — `npm run test:known-defects`. Monitoring only. Failures stay visible in the Playwright report and do not block the PR.
 
 `npm test` is for local full-suite inspection. It can be red because known-defect assertions are allowed to fail.
 
-Branch protection for `master` (require PR + required check **Regression**) is configured in the GitHub repository settings, not in this repo.
+Branch protection for `master` (require PR + required check **Regression**) is configured in the GitHub repository settings, not in this repo. Smoke is not a required status check yet.
 
 ## Architecture
 
